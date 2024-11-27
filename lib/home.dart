@@ -130,18 +130,18 @@ class _TZCState extends State<TZC> {
                 ),
 
                 child: Center(
-                  child: DropdownButton(
-                    value: currentTimeZone,
+                  child: DropdownButton<String>(
+                      value: currentTimeZone,
                       items: timeZones.map((String zone){
                         return DropdownMenuItem<String>(
-                            value: zone,
-                            child: Text(zone),
+                          value: zone,
+                          child: Text(zone),
                         );
                       }).toList(),
                       onChanged: (value){
-                      setState(() {
-                        currentTimeZone=value!;
-                      });
+                        setState(() {
+                          currentTimeZone=value!;
+                        });
                       }),
                 ),
               ),
@@ -201,7 +201,7 @@ class _TZCState extends State<TZC> {
                 ),
 
                 child: Center(
-                  child: DropdownButton(
+                  child: DropdownButton<String>(
                       value: destinationTimeZone,
                       items: timeZones.map((String zone){
                         return DropdownMenuItem<String>(
@@ -252,12 +252,12 @@ class _TZCState extends State<TZC> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
-                onPressed:null,
+                onPressed:_convertTime,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal,
-                  disabledBackgroundColor: const Color.fromRGBO(
-                      3, 105, 86, 0.30196078431372547),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+                    backgroundColor: Colors.teal,
+                    disabledBackgroundColor: const Color.fromRGBO(
+                        3, 105, 86, 0.30196078431372547),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                 ),
 
                 child: const Text("Convert Time",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Colors.white),)),
