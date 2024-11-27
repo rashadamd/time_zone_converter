@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
 class TZC extends StatefulWidget {
@@ -135,7 +138,8 @@ class _TZCState extends State<TZC> {
                       items: timeZones.map((String zone){
                         return DropdownMenuItem<String>(
                           value: zone,
-                          child: Text(zone),
+                          child: Text(zone, style: const TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Color.fromRGBO(
+                              0, 96, 92, 1.0)),),
                         );
                       }).toList(),
                       onChanged: (value){
@@ -166,16 +170,65 @@ class _TZCState extends State<TZC> {
                       width: 5.0,
                     )
                 ),
-                child: TextField(
-                  controller: timeInputController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Enter Time (HH:mm)',
-                    contentPadding: EdgeInsets.all(15.0),
+
+                child: Center(
+                  child: TextField(
+                    controller: timeInputController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^\d{0,2}(:\d{0,2})?$')),
+                      LengthLimitingTextInputFormatter(5),
+                    ],
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Enter Time (HH:mm)',
+                      hintStyle: TextStyle(
+                        fontSize: 30.0,
+                        color: Colors.teal,
+                        fontWeight: FontWeight.bold
+                      ),
+                      contentPadding: EdgeInsets.all(15.0),
+                    ),
+                    style: const TextStyle(
+                      fontSize: 30.0,
+                      color: Colors.teal,
+                        fontWeight: FontWeight.bold
+
+                    ),
+                    onChanged: (value) {
+                      if (value.contains(':')) {
+                        final parts = value.split(':');
+                        if (parts.length == 2) {
+                          String hours = parts[0];
+                          String minutes = parts[1];
+
+
+                          if (hours.isNotEmpty) {
+                            final hourValue = int.tryParse(hours) ?? -1;
+                            if (hourValue > 23) {
+                              hours = '23';
+                            }
+                          }
+
+
+                          if (minutes.isNotEmpty) {
+                            final minuteValue = int.tryParse(minutes) ?? -1;
+                            if (minuteValue > 59) {
+                              minutes = '59';
+                            }
+                          }
+
+                          timeInputController.value = TextEditingValue(
+                            text: '$hours:$minutes',
+                            selection: TextSelection.collapsed(
+                                offset: '$hours:$minutes'.length
+                            ),
+                          );
+                        }
+                      }
+                    },
                   ),
                 ),
-
 
               ),
             ),
@@ -206,7 +259,10 @@ class _TZCState extends State<TZC> {
                       items: timeZones.map((String zone){
                         return DropdownMenuItem<String>(
                           value: zone,
-                          child: Text(zone),
+                          child: Text(zone, style: const TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Color.fromRGBO(
+                              0, 96, 92, 1.0),
+                          ),
+                          ),
                         );
                       }).toList(),
                       onChanged: (value){
@@ -240,9 +296,11 @@ class _TZCState extends State<TZC> {
                     )
                 ),
 
-                child: Text(
-                  convertedTime,
-                  style: const TextStyle(fontSize: 25,color: Colors.teal,fontWeight: FontWeight.bold),
+                child: Center(
+                  child: Text(
+                    convertedTime,
+                    style: const TextStyle(fontSize: 30,color: Colors.teal,fontWeight: FontWeight.bold),
+                  ),
                 ),
 
               ),
@@ -252,15 +310,17 @@ class _TZCState extends State<TZC> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: ElevatedButton(
+
                 onPressed:_convertTime,
                 style: ElevatedButton.styleFrom(
+
                     backgroundColor: Colors.teal,
                     disabledBackgroundColor: const Color.fromRGBO(
                         3, 105, 86, 0.30196078431372547),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                 ),
 
-                child: const Text("Convert Time",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Colors.white),)),
+                child: const Text("🕐 Convert Time",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: Colors.white),)),
           )
         ],
       ),
