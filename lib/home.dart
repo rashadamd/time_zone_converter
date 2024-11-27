@@ -101,6 +101,7 @@ class _TZCState extends State<TZC> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: Color.alphaBlend(Colors.grey.shade300, Colors.tealAccent),
       appBar: AppBar(
         backgroundColor: Colors.teal,
         title: const Center(
@@ -113,6 +114,8 @@ class _TZCState extends State<TZC> {
 
       //to display current timezone - user able to change the current time zone
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
         children: [
           const Padding(
             padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
