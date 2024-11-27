@@ -155,7 +155,7 @@ class _TZCState extends State<TZC> {
           //to display Current time for specific timezone  - user can chnage
           const Padding(
             padding: EdgeInsets.fromLTRB(5, 10, 5, 0),
-            child: Center(child: Text("Current Time",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.teal),),),
+            child: Center(child: Text("Current Time (24h)",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.teal),),),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
